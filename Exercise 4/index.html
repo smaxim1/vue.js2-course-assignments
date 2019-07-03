@@ -1,0 +1,76 @@
+<script src="https://npmcdn.com/vue/dist/vue.js"></script>
+
+<div id="exercise">
+  <!-- 1) Start the Effect with the Button. The Effect should alternate the "highlight" or "shrink" class on each new setInterval tick (attach respective class to the div with id "effect" below) -->
+  <div>
+    <button @click="startEffect">Start Effect</button>
+    <div id="effect" :class="{ highlight: isHighlighted, shrink: !isHighlighted }"></div>
+  </div>
+  <!-- 2) Create a couple of CSS classes and attach them via the array syntax -->
+  <div :class="[blockWidth, blockHeight]">I got no class :(</div>
+  <!-- 3) Let the user enter a class (create some example classes) and attach it -->
+  <div>
+    <input type="text" v-model="color">
+    <div class="demo" :class="color"></div>
+  </div>
+  <!-- 4) Let the user enter a class and enter true/ false for another class (create some example classes) and attach the classes -->
+  <div>
+    <input type="text" v-model="color2">
+    <input type="text" v-model="computedColoring">
+    <div class="demo" :class="computedColoring"></div>
+  </div>
+  <!-- 5) Repeat 3) but now with values for styles (instead of class names). Attach the respective styles.  -->
+  <div>
+    <input type="text" v-model="color3">
+    <div class="demo" :style="{'background-color':color3}"></div>
+  </div>
+  <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
+  <div>
+    <button @click="startProgress">Start Progress</button>
+    <div class="progress" :style="{width: progressWidth + 'px'}"></div>
+  </div>
+</div>
+<script>
+new Vue({
+  el: '#exercise',
+  data: {
+    isHighlighted: false,
+    blockWidth: 'blockwidth',
+    blockHeight: 'blockheight',
+    color:'red',
+    color2:'red',
+    color3:'',
+    isColored: true,
+    progressWidth: 10
+  },
+  computed: {
+    computedColoring: function(inputTxt) {
+    	if(inputTxt === 'true') {
+      	this.isColored = true;
+      }
+      else if (inputTxt === 'false') {
+      	this.isColored = false;
+      }
+    }
+  },
+  methods: {
+    startEffect: function() {
+    	var vm = this;
+      setInterval(function() {
+      	vm.isHighlighted = ! vm.isHighlighted;
+      }, 5000);
+      
+    },
+    startProgress: function() {
+    	var vm = this;
+      let increment = 10;
+      setInterval(function() {
+      	if(vm.progressWidth <= 200) {
+        	vm.progressWidth += increment;
+        }
+        
+      }, 500);
+    }
+  }
+});
+</script>
